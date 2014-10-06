@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
@@ -7,32 +6,67 @@
 	<title><?php echo $this->config->item('company').' -- '.$this->lang->line('common_powered_by').' OS Point Of Sale' ?></title>
 	
 	<!-- Bootstrap core CSS -->
-    <link href="C:\wamp\www\project\onlinepos_php\bootstrap\css\bootstrap.css" rel="stylesheet">
+    <link href="<?php echo base_url();?>\bootstrap\css\bootstrap.css" rel="stylesheet">
 	
 	<!-- Font Awesome -->
-	<link href="C:\wamp\www\project\onlinepos_php\css\font-awesome.css" rel="stylesheet">
+	<link href="<?php echo base_url();?>\css\font-awesome.css" rel="stylesheet">
 	
 	<!-- Color box -->
-	<link href="C:\wamp\www\project\onlinepos_php\css\colorbox\colorbox.css" rel="stylesheet">
+	<link href="<?php echo base_url();?>\css\colorbox\colorbox.css" rel="stylesheet">
 	
 	<!-- Pace -->
-	<link href="C:\wamp\www\project\onlinepos_php\css\pace.css" rel="stylesheet">
-	
-	<!-- Color box -->
-	<link href="C:\wamp\www\project\onlinepos_php\css\colorbox\colorbox.css" rel="stylesheet">
+	<link href="<?php echo base_url();?>\css\pace.css" rel="stylesheet">
 	
 	<!-- Morris -->
-	<link href="C:\wamp\www\project\onlinepos_php\css\morris.css" rel="stylesheet">	
+	<link href="<?php echo base_url();?>\css\morris.css" rel="stylesheet">	
 	
 	<!-- Endless -->
-	<link href="C:\wamp\www\project\onlinepos_php\css\endless.css" rel="stylesheet">
-	<link href="C:\wamp\www\project\onlinepos_php\css\endless-skin.css" rel="stylesheet">
+	<link href="<?php echo base_url();?>\css\endless.css" rel="stylesheet">
+	<link href="<?php echo base_url();?>\css\endless-skin.css" rel="stylesheet">
 <style type="text/css">
 html {
     overflow: auto;
 }
 </style>
 
+	<!-- Jquery -->
+	<script src="<?php echo base_url();?>\js\jquery-1.10.2.js"></script>
+
+	<!-- Bootstrap -->
+    <script src="<?php echo base_url();?>\bootstrap\js\bootstrap.js"></script>
+   
+	<!-- Flot -->
+	<script src='<?php echo base_url();?>\js\jquery.flot.js'></script>
+   
+	<!-- Morris -->
+	<script src='<?php echo base_url();?>\js\rapheal.js'></script>	
+	<script src='<?php echo base_url();?>\js\morris.js'></script>	
+	
+	<!-- Colorbox -->
+	<script src='<?php echo base_url();?>\js\jquery.colorbox.js'></script>	
+
+	<!-- Sparkline -->
+	<script src='<?php echo base_url();?>\js\jquery.sparkline.js'></script>
+	
+	<!-- Pace -->
+	<script src='<?php echo base_url();?>\js\pace.js'></script>
+	
+	<!-- Popup Overlay -->
+	<script src='<?php echo base_url();?>\js\jquery.popupoverlay.js'></script>
+	
+	<!-- Slimscroll -->
+	<script src='<?php echo base_url();?>\js\jquery.slimscroll.js'></script>
+	
+	<!-- Modernizr -->
+	<script src='<?php echo base_url();?>\js\modernizr.js'></script>
+	
+	<!-- Cookie -->
+	<script src='<?php echo base_url();?>\js\jquery.cookie.js'></script>
+	
+	<!-- Endless -->
+	<script src="<?php echo base_url();?>\js\endless\endless_dashboard.js"></script>
+	<script src="<?php echo base_url();?>\js\endless\endless.js"></script>
+	
 </head>
 <body class="overflow-hidden">
 	<!-- Overlay Div -->
@@ -470,45 +504,5 @@ html {
 							</ul>
 						</li>
 					</ul>
-					
-	<!-- Jquery -->
-	<script src="C:\wamp\www\project\onlinepos_php\js\jquery-1.10.2.js"></script>
-
-	<!-- Bootstrap -->
-    <script src="C:\wamp\www\project\onlinepos_php\bootstrap\js\bootstrap.js"></script>
-   
-	<!-- Flot -->
-	<script src='C:\wamp\www\project\onlinepos_php\js\jquery.flot.js'></script>
-   
-	<!-- Morris -->
-	<script src='C:\wamp\www\project\onlinepos_php\js\rapheal.js'></script>	
-	<script src='C:\wamp\www\project\onlinepos_php\js\morris.js'></script>	
-	
-	<!-- Colorbox -->
-	<script src='C:\wamp\www\project\onlinepos_php\js\jquery.colorbox.js'></script>	
-
-	<!-- Sparkline -->
-	<script src='C:\wamp\www\project\onlinepos_php\js\jquery.sparkline.js'></script>
-	
-	<!-- Pace -->
-	<script src='C:\wamp\www\project\onlinepos_php\js\pace.js'></script>
-	
-	<!-- Popup Overlay -->
-	<script src='C:\wamp\www\project\onlinepos_php\js\jquery.popupoverlay.js'></script>
-	
-	<!-- Slimscroll -->
-	<script src='C:\wamp\www\project\onlinepos_php\js\jquery.slimscroll.js'></script>
-	
-	<!-- Modernizr -->
-	<script src='C:\wamp\www\project\onlinepos_php\js\modernizr.js'></script>
-	
-	<!-- Cookie -->
-	<script src='C:\wamp\www\project\onlinepos_php\js\jquery.cookie.js'></script>
-	
-	<!-- Endless -->
-	<script src="C:\wamp\www\project\onlinepos_php\js\endless\endless_dashboard.js"></script>
-	<script src="C:\wamp\www\project\onlinepos_php\js\endless\endless.js"></script>
-	
-  </body>
-</html>
+				</div>
 
