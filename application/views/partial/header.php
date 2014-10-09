@@ -51,6 +51,9 @@
 	<!-- Pace -->
 	<script src='<?php echo base_url();?>\js\pace.js'></script>
 	
+	<!-- Parsley -->
+	<script src='<?php echo base_url();?>\js\parsley.js'></script>
+	
 	<!-- Popup Overlay -->
 	<script src='<?php echo base_url();?>\js\jquery.popupoverlay.js'></script>
 	
