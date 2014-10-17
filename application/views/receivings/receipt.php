@@ -111,3 +111,6 @@ $(window).load(function()
 <?php
 }
 ?>
+
+</body>
+</html>

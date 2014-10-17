@@ -12,5 +12,3 @@
 			</div><!-- /.row-->
 		</footer>
 
-</body>
-</html>

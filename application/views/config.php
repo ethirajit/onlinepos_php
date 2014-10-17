@@ -404,3 +404,5 @@ echo form_open('config/save/',$attributes_config_form);
 </div>
 </div><!row>
 <?php $this->load->view("partial/footer"); ?>
+</body>
+</html>

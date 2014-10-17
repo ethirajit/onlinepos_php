@@ -15,3 +15,5 @@
 		</div><!-- /main-container -->
 	</div><!-- /wrapper -->
 <?php $this->load->view("partial/footer"); ?>
+</body>
+</html>
