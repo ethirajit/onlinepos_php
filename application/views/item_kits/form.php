@@ -12,7 +12,8 @@ echo form_open('item_kits/save/'.$item_kit_info->item_kit_id,array('id'=>'item_k
 	<?php echo form_input(array(
 		'name'=>'name',
 		'id'=>'name',
-		'value'=>$item_kit_info->name)
+		'value'=>$item_kit_info->name,
+		'class' => 'form-control input-sm bounceIn animation-delay2')
 	);?>
 	</div>
 </div>
@@ -41,7 +42,7 @@ echo form_open('item_kits/save/'.$item_kit_info->item_kit_id,array('id'=>'item_k
 	</div>
 </div>
 
-<table id="item_kit_items">
+<table  id="item_kit_items">
 	<tr>
 		<th><?php echo $this->lang->line('common_delete');?></th>
 		<th><?php echo $this->lang->line('item_kits_item');?></th>
