@@ -1,5 +1,6 @@
 <?php $this->load->view("partial/header"); ?>
-<div id="page_title" style="margin-bottom: 8px;"><?php echo $this->lang->line('sales_register'); ?></div>
+<center><h1>
+<div id="page_title" style="margin-bottom: 8px;"><?php echo $this->lang->line('sales_register'); ?></div></h1></center>
 <?php
 if(isset($error))
 {
@@ -16,182 +17,203 @@ if (isset($success))
 	echo "<div class='success_message'>".$success."</div>";
 }
 ?>
-<div id="register_wrapper">
-<?php echo form_open("sales/change_mode",array('id'=>'mode_form')); ?>
-	<span><?php echo $this->lang->line('sales_mode') ?></span>
-<?php echo form_dropdown('mode',$modes,$mode,'onchange="$(\'#mode_form\').submit();"'); ?>
-<?php if ($show_stock_locations): ?>
-<span><?php echo $this->lang->line('sales_stock_location') ?></span>
-<?php echo form_dropdown('stock_location',$stock_locations,$stock_location,'onchange="$(\'#mode_form\').submit();"'); ?>
-<?php endif; ?>
-<div id="show_suspended_sales_button">
-	<?php echo anchor("sales/suspended/width:425",
-	"<div class='small_button'><span style='font-size:73%;'>".$this->lang->line('sales_suspended_sales')."</span></div>",
-	array('class'=>'thickbox none','title'=>$this->lang->line('sales_suspended_sales')));
-	?>
-</div>
-	</form>
-<?php echo form_open("sales/add",array('id'=>'add_item_form')); ?>
-<label id="item_label" for="item">
+<div class="row">
+	<div class="col-md-8">
+		<div class="panel panel-default">
+			<div class="panel-body">					
+				<form class="form-horizontal form-border no-margin" id="type-constraint" data-validate="parsley" novalidate="">
+				    <div class="col-lg-4">
+					<?php echo form_open("sales/change_mode",array('id'=>'mode_form')); ?>
+					<span><?php echo $this->lang->line('sales_mode') ?></span>
+					<?php echo form_dropdown('mode',$modes,$mode,'onchange="$(\'#mode_form\').submit();"'); ?></div>
 
-<?php
-if($mode=='sale_retail' or $mode=='sale_wholesale')
-{
-	echo $this->lang->line('sales_find_or_scan_item');
-}
-else
-{
-	echo $this->lang->line('sales_find_or_scan_item_or_receipt');
-}
-?>
-</label>
+				    <div class="col-lg-4">
+					<?php if ($show_stock_locations): ?>
+					<span><?php echo $this->lang->line('sales_stock_location') ?></span>
+					<?php echo form_dropdown('stock_location',$stock_locations,$stock_location,'onchange="$(\'#mode_form\').submit();"'); ?>
+					<?php endif; ?></div>
+					
+				    
+					<div class="col-lg-4" id="show_suspended_sales_button">
+						<?php echo anchor("sales/suspended/width:425",
+						"<div><span style='font-size:73%;'>".$this->lang->line('sales_suspended_sales')."</span></div>",
+						array('class'=>'btn btn-sm btn-success','title'=>$this->lang->line('sales_suspended_sales')));
+						?>
+					</div>
+						<div class="clearfix">&nbsp;</div>
+						<div class="clearfix">&nbsp;</div>
+	
+						<?php echo form_open("sales/add",array('id'=>'add_item_form')); ?>
+						<label class="control-label col-lg-4" id="item_label" for="item">
 
-<?php echo form_input(array('name'=>'item','id'=>'item','size'=>'40'));?>
-<!-- no need the new item button in sale page
-<div id="new_item_button_register" >
-		<?php echo anchor("items/view/-1/width:360",
-		"<div class='small_button'><span>".$this->lang->line('sales_new_item')."</span></div>",
-		array('class'=>'thickbox none','title'=>$this->lang->line('sales_new_item')));
-		?>
-	</div>
+						<?php
+						if($mode=='sale_retail' or $mode=='sale_wholesale')
+						{
+							echo $this->lang->line('sales_find_or_scan_item');
+						}
+						else
+						{
+							echo $this->lang->line('sales_find_or_scan_item_or_receipt');
+						}
+						?>
+						</label>
+
+						<div class="col-lg-8">
+						<?php echo form_input(array('name'=>'item','id'=>'item','size'=>'40'));?></div>
+						<div class="clearfix">&nbsp;</div>
+						<div class="clearfix">&nbsp;</div>
+						<!-- no need the new item button in sale page
+						<div id="new_item_button_register" >
+								<?php echo anchor("items/view/-1/width:360",
+								"<div class='small_button'><span>".$this->lang->line('sales_new_item')."</span></div>",
+								array('class'=>'thickbox none','title'=>$this->lang->line('sales_new_item')));
+								?>
+							</div>
 -->
-	</form>
-	<table id="register">
-		<thead>
-			<tr>
-				<th style="width: 11%;"><?php echo $this->lang->line('common_delete'); ?></th>
-				<th style="width: 30%;"><?php echo $this->lang->line('sales_item_number'); ?></th>
-				<th style="width: 30%;"><?php echo $this->lang->line('sales_item_name'); ?></th>
-				<th style="width: 11%;"><?php echo $this->lang->line('sales_price'); ?></th>
-				<th style="width: 11%;"><?php echo $this->lang->line('sales_quantity'); ?></th>
-				<th style="width: 11%;"><?php echo $this->lang->line('sales_discount'); ?></th>
-				<th style="width: 15%;"><?php echo $this->lang->line('sales_total'); ?></th>
-				<th style="width: 11%;"><?php echo $this->lang->line('sales_edit'); ?></th>
-			</tr>
-		</thead>
-		<tbody id="cart_contents">
-<?php
-if(count($cart)==0)
-{
-?>
-<tr>
-				<td colspan='8'>
-					<div class='warning_message' style='padding: 7px;'><?php echo $this->lang->line('sales_no_items_in_cart'); ?></div>
-			
-			</tr>
-			</tr>
-<?php
-}
-else
-{
-	foreach(array_reverse($cart, true) as $line=>$item)
-	{
-		$cur_item_info = $this->Item->get_info($item['item_id']);
-		echo form_open("sales/edit_item/$line");
-	?>
-		<tr>
-				<td><?php echo anchor("sales/delete_item/$line",'['.$this->lang->line('common_delete').']');?></td>
-				<td><?php echo $item['item_number']; ?></td>
-				<td style="align: center;"><?php echo $item['name']; ?><br /> [<?php echo $item['in_stock'] ?> in <?php echo $item['stock_name']; ?>]
-				<?php echo form_hidden('location', $item['item_location']); ?>
-				</td>
+
+						<table class="table table-bordered table-condensed table-hover table-striped col-lg-12" id="register">								<thead>
+									<tr>
+										<th style="width: 11%;"><?php echo $this->lang->line('common_delete'); ?></th>
+										<th style="width: 30%;"><?php echo $this->lang->line('sales_item_number'); ?></th>
+										<th style="width: 30%;"><?php echo $this->lang->line('sales_item_name'); ?></th>
+										<th style="width: 11%;"><?php echo $this->lang->line('sales_price'); ?></th>
+										<th style="width: 11%;"><?php echo $this->lang->line('sales_quantity'); ?></th>
+										<th style="width: 11%;"><?php echo $this->lang->line('sales_discount'); ?></th>
+										<th style="width: 15%;"><?php echo $this->lang->line('sales_total'); ?></th>
+										<th style="width: 11%;"><?php echo $this->lang->line('sales_edit'); ?></th>
+									</tr>
+								</thead>
+						<tbody id="cart_contents.table-striped">
+									<?php
+									if(count($cart)==0)
+									{
+									?>
+									<tr>
+									<td colspan='8'>
+									<div class='warning_message' style='padding: 7px;'><?php echo $this->lang->line('sales_no_items_in_cart'); ?></div>
+									</tr>
+									<?php
+									}
+									else
+									{
+										foreach(array_reverse($cart, true) as $line=>$item)
+										{
+											$cur_item_info = $this->Item->get_info($item['item_id']);
+											echo form_open("sales/edit_item/$line");
+										?>
+											<tr>
+													<td><?php echo anchor("sales/delete_item/$line",'['.$this->lang->line('common_delete').']');?></td>
+													<td><?php echo $item['item_number']; ?></td>
+													<td style="align: center;"><?php echo $item['name']; ?><br /> [<?php echo $item['in_stock'] ?> in <?php echo $item['stock_name']; ?>]
+													<?php echo form_hidden('location', $item['item_location']); ?>
+													</td>
 
 
-		<?php if ($items_module_allowed)
-		{
-		?>
-			<td><?php echo form_input(array('name'=>'price','value'=>$item['price'],'size'=>'6'));?></td>
+											<?php if ($items_module_allowed)
+											{
+											?>
+												<td><?php echo form_input(array('name'=>'price','value'=>$item['price'],'size'=>'6'));?></td>
 
-		<?php
-		}
-		else
-		{
-		?>
-			<td><?php echo $item['price']; ?></td>
-			<?php echo form_hidden('price',$item['price']); ?>
-		<?php
-		}
-		?>
+											<?php
+											}
+											else
+											{
+											?>
+												<td><?php echo $item['price']; ?></td>
+												<?php echo form_hidden('price',$item['price']); ?>
+											<?php
+											}
+											?>
 
-		<td>
-		<?php
-        	if($item['is_serialized']==1)
-        	{
-        		echo $item['quantity'];
-        		echo form_hidden('quantity',$item['quantity']);
-        	}
-        	else
-        	{
-        		echo form_input(array('name'=>'quantity','value'=>$item['quantity'],'size'=>'2'));
-        	}
-		?>
-		</td>
+											<td>
+											<?php
+												if($item['is_serialized']==1)
+												{
+													echo $item['quantity'];
+													echo form_hidden('quantity',$item['quantity']);
+												}
+												else
+												{
+													echo form_input(array('name'=>'quantity','value'=>$item['quantity'],'size'=>'2'));
+												}
+											?>
+											</td>
 
-				<td><?php echo form_input(array('name'=>'discount','value'=>$item['discount'],'size'=>'3'));?></td>
-				<td><?php echo to_currency($item['price']*$item['quantity']-$item['price']*$item['quantity']*$item['discount']/100); ?></td>
-				<td><?php echo form_submit("edit_item", $this->lang->line('sales_edit_item'));?></td>
-			</tr>
-			<tr>
-				<td style="color: #2F4F4F";><?php echo $this->lang->line('sales_description_abbrv').':';?></td>
-				<td colspan=2 style="text-align: left;">
+													<td><?php echo form_input(array('name'=>'discount','value'=>$item['discount'],'size'=>'3'));?></td>
+													<td><?php echo to_currency($item['price']*$item['quantity']-$item['price']*$item['quantity']*$item['discount']/100); ?></td>
+													<td><?php echo form_submit("edit_item", $this->lang->line('sales_edit_item'));?></td>
+										</tr>
+												<tr>
+													<td style="color: #2F4F4F";><?php echo $this->lang->line('sales_description_abbrv').':';?></td>
+													<td colspan=2 style="text-align: left;">
 
-		<?php
-        	if($item['allow_alt_description']==1)
-        	{
-        		echo form_input(array('name'=>'description','value'=>$item['description'],'size'=>'20'));
-        	}
-        	else
-        	{
-				if ($item['description']!='')
-				{
-					echo $item['description'];
-        			echo form_hidden('description',$item['description']);
-        		}
-        		else
-        		{
-        		    echo $this->lang->line('sales_no_description');
-           			echo form_hidden('description','');
-        		}
-        	}
-		?>
-		</td>
-				<td>&nbsp;</td>
-				<td style="color: #2F4F4F";>
-		<?php
-        	if($item['is_serialized']==1)
-        	{
-				echo $this->lang->line('sales_serial').':';
-			}
-		?>
-		</td>
-				<td colspan=3 style="text-align: left;">
-		<?php
-        	if($item['is_serialized']==1)
-        	{
-        		echo form_input(array('name'=>'serialnumber','value'=>$item['serialnumber'],'size'=>'20'));
-			}
-			else
-			{
-				echo form_hidden('serialnumber', '');
-			}
-		?>
-		</td>
+											<?php
+												if($item['allow_alt_description']==1)
+												{
+													echo form_input(array('name'=>'description','value'=>$item['description'],'size'=>'20'));
+												}
+												else
+												{
+													if ($item['description']!='')
+													{
+														echo $item['description'];
+														echo form_hidden('description',$item['description']);
+													}
+													else
+													{
+														echo $this->lang->line('sales_no_description');
+														echo form_hidden('description','');
+													}
+												}
+											?>
+											</td>
+													<td>&nbsp;</td>
+													<td style="color: #2F4F4F";>
+											<?php
+												if($item['is_serialized']==1)
+												{
+													echo $this->lang->line('sales_serial').':';
+												}
+											?>
+											</td>
+													<td colspan=3 style="text-align: left;">
+											<?php
+												if($item['is_serialized']==1)
+												{
+													echo form_input(array('name'=>'serialnumber','value'=>$item['serialnumber'],'size'=>'20'));
+												}
+												else
+												{
+													echo form_hidden('serialnumber', '');
+												}
+											?>
+											</td>
 
 
-			</tr>
-			<tr style="height: 3px">
-				<td colspan=8 style="background-color: white"></td>
-			</tr>
-			</form>
-	<?php
-	}
-}
-?>
-</tbody>
-	</table>
+												</tr>
+												<tr style="height: 3px">
+													<td colspan=8 style="background-color: white"></td>
+												</tr>
+												
+										<?php
+										}
+									}
+									?>
+									</tbody>
+							</table>
+
+</form>
+</div>
+</div>
 </div>
 
+<!end of 1>
 
+<div class="col-md-4">
+	<div class="panel panel-default">
+		<div class="panel-body">					
+			<div id="register_wrapper">
+				<form class="form-horizontal form-border no-margin" id="type-constraint" data-validate="parsley" novalidate="">
 <div id="overall_sale">
 	<?php
 	if(isset($customer))
@@ -202,15 +224,22 @@ else
 	else
 	{
 		echo form_open("sales/select_customer",array('id'=>'select_customer_form')); ?>
-		<label id="customer_label" for="customer"><?php echo $this->lang->line('sales_select_customer'); ?></label>
-		<?php echo form_input(array('name'=>'customer','id'=>'customer','size'=>'30','value'=>$this->lang->line('sales_start_typing_customer_name')));?>
-		</form>
-	<div style="margin-top: 5px; text-align: center;">
+		<div class="form-group">
+		<label class="control-label col-lg-4" id="customer_label" for="customer"><?php echo $this->lang->line('sales_select_customer'); ?></label>
+		<div class="col-lg-12">
+		<?php echo form_input(array('name'=>'customer','id'=>'customer','size'=>'30','value'=>$this->lang->line('sales_start_typing_customer_name'),'class' => 'form-control input-sm bounceIn animation-delay2'));?>
+		</div>
+		<div style="margin-top:5px;text-align:center;">
+		<div class="clearfix">&nbsp;</div>
+		<div class="clearfix">&nbsp;</div>
+		</div>
+		</div>
 		<h3 style="margin: 5px 0 5px 0"><?php echo $this->lang->line('common_or'); ?></h3>
+		<button type="submit" class="btn btn-success btn-sm">
 		<?php echo anchor("customers/view/-1/width:350",
-		"<div class='small_button' style='margin:0 auto;'><span>".$this->lang->line('sales_new_customer')."</span></div>",
+		"<div style='margin:0 auto;'>".$this->lang->line('sales_new_customer')."</div>",
 		array('class'=>'thickbox none','title'=>$this->lang->line('sales_new_customer')));
-		?>
+		?></button>
 		</div>
 	<div class="clearfix">&nbsp;</div>
 		<?php
@@ -245,7 +274,7 @@ else
 			style='margin-top: 5px;'>
 			<span><?php echo $this->lang->line('sales_cancel_sale'); ?></span>
 		</div>
-		</form>
+		
 	</div>
 	<div class="clearfix" style="margin-bottom: 1px;">&nbsp;</div>
 		<?php
@@ -279,7 +308,7 @@ else
 				echo "<div class='small_button' id='suspend_sale_button' style='float:right;margin-top:5px;'><span>".$this->lang->line('sales_suspend_sale')."</span></div>";
 				?>
 			</div>
-	</form>
+	
 		<?php
 		}
 		?>
@@ -326,7 +355,7 @@ else
 				<span><?php echo $this->lang->line('sales_add_payment'); ?></span>
 			</div>
 		</div>
-		</form>
+		
 
 		<?php
 		// Only show this part if there is at least one payment entered.
@@ -357,7 +386,7 @@ else
 
 
 				</tr>
-				</form>
+				
 				<?php
 				}
 				?>
@@ -377,6 +406,11 @@ else
 	?>
 </div>
 <div class="clearfix" style="margin-bottom: 30px;">&nbsp;</div>
+</form>
+</div>
+</div>
+</div>
+</div>
 
 
 <?php $this->load->view("partial/footer"); ?>

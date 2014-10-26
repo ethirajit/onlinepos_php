@@ -60,16 +60,16 @@ function post_person_form_submit(response)
 	<div id="title" class="float_left"><?php echo $this->lang->line('common_list_of').' '.$this->lang->line('module_'.$controller_name); ?></div>
 	<div id="new_button">
 		<?php echo anchor("$controller_name/view/-1/width:$form_width",
-		"<div class='big_button'><span>".$this->lang->line($controller_name.'_new')."</span></div>",
-		array('class'=>'thickbox none','title'=>$this->lang->line($controller_name.'_new')));
+		"<div ><span>".$this->lang->line($controller_name.'_new')."</span></div>",
+		array('class'=>'btn btn-sm btn-success','title'=>$this->lang->line($controller_name.'_new')));
 		?>
 	</div>
 </div>
 <?php echo $this->pagination->create_links();?>
 <div id="table_action_header">
 	<ul>
-		<li class="float_left"><span><?php echo anchor("$controller_name/delete",$this->lang->line("common_delete"),array('id'=>'delete')); ?></span></li>
-		<li class="float_left"><span><a href="#" id="email"><?php echo $this->lang->line("common_email");?></a></span></li>
+		<li class="btn btn-success float_left"><?php echo anchor("$controller_name/delete",$this->lang->line("common_delete"),array('id'=>'delete')); ?></li>
+		<li class="btn btn-success float_left"><a href="#" id="email"><?php echo $this->lang->line("common_email");?></a></li>
 		<li class="float_right">
 		<img src='<?php echo base_url()?>images/spinner_small.gif' alt='spinner' id='spinner' />
 		<?php echo form_open("$controller_name/search",array('id'=>'search_form')); ?>
