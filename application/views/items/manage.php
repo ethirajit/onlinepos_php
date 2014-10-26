@@ -116,12 +116,12 @@ function show_hide_search_filter(search_filter_section, switchImgTag) {
 	<div id="title" class="float_left"><?php echo $this->lang->line('common_list_of').' '.$this->lang->line('module_'.$controller_name); ?></div>
 	<div id="new_button">
 		<?php echo anchor("$controller_name/view/-1/width:$form_width",
-		"<div class='big_button' style='float: left;'><span>".$this->lang->line($controller_name.'_new')."</span></div>",
-		array('class'=>'thickbox none','title'=>$this->lang->line($controller_name.'_new')));
+		"<div style='float: right;'><span>".$this->lang->line($controller_name.'_new')."</span></div>",
+		array('class'=>'btn btn-sm btn-success','title'=>$this->lang->line($controller_name.'_new')));
 		?>
 		<?php echo anchor("$controller_name/excel_import/width:$form_width",
-		"<div class='big_button' style='float: left;'><span>Excel Import</span></div>",
-		array('class'=>'thickbox none','title'=>'Import Items from Excel'));
+		"<div style='float: right;'><span>Excel Import</span></div>",
+		array('class'=>'btn btn-sm btn-success','title'=>'Import Items from Excel'));
 		?>
 	</div>
 </div>
@@ -135,28 +135,34 @@ function show_hide_search_filter(search_filter_section, switchImgTag) {
 
 <div id="search_filter_section" style="display: <?php echo isset($search_section_state)?  ( ($search_section_state)? 'block' : 'none') : 'none';?>;background-color:#EEEEEE;">
 	<?php echo form_open("$controller_name/refresh",array('id'=>'items_filter_form')); ?>
+		<div class="row">
+				<div class="col-md-4">
+				<div class="col-lg-4">
 	<?php echo form_label($this->lang->line('items_serialized_items').' '.':', 'is_serialized');?>
-	<?php echo form_checkbox(array('name'=>'is_serialized','id'=>'is_serialized','value'=>1,'checked'=> isset($is_serialized)?  ( ($is_serialized)? 1 : 0) : 0)).' | ';?>
+	<?php echo form_checkbox(array('name'=>'is_serialized','id'=>'is_serialized','value'=>1,'checked'=> isset($is_serialized)?  ( ($is_serialized)? 1 : 0) : 0)).' | ';?></div>
+								<div class="col-lg-4">
 	<?php echo form_label($this->lang->line('items_no_description_items').' '.':', 'no_description');?>
-	<?php echo form_checkbox(array('name'=>'no_description','id'=>'no_description','value'=>1,'checked'=> isset($no_description)?  ( ($no_description)? 1 : 0) : 0)).' | ';?>
+	<?php echo form_checkbox(array('name'=>'no_description','id'=>'no_description','value'=>1,'checked'=> isset($no_description)?  ( ($no_description)? 1 : 0) : 0)).' | ';?></div>
+								<div class="col-lg-4">
 	<?php echo form_label($this->lang->line('items_search_custom_items').' '.':', 'search_custom');//GARRISON ADDED 4/21/2013?>
+	<?php echo form_checkbox(array('name'=>'search_custom','id'=>'search_custom','value'=>1,'checked'=> isset($search_custom)?  ( ($search_custom)? 1 : 0) : 0));//GARRISON ADDED 4/21/2013?>  </div>
 	<?php echo form_checkbox(array('name'=>'search_custom','id'=>'search_custom','value'=>1,'checked'=> isset($search_custom)?  ( ($search_custom)? 1 : 0) : 0));//GARRISON ADDED 4/21/2013?>  
-	<input type="hidden" name="search_section_state" id="search_section_state" value="<?php echo isset($search_section_state)?  ( ($search_section_state)? 'block' : 'none') : 'none';?>" />
+	<input type="hidden" name="search_section_state" id="search_section_state" value="<?php echo isset($search_section_state)?  ( ($search_section_state)? 'block' : 'none') : 'none';?>" /></div></div>
 	</form>
 </div>
+
 <?php echo $this->pagination->create_links();?>
-<div id="table_action_header">
-	<ul>
-		<li class="float_left"><span><?php echo anchor("$controller_name/delete",$this->lang->line("common_delete"),array('id'=>'delete')); ?></span></li>
-		<li class="float_left"><span><?php echo anchor("$controller_name/bulk_edit/width:$form_width",$this->lang->line("items_bulk_edit"),array('id'=>'bulk_edit','title'=>$this->lang->line('items_edit_multiple_items'))); ?></span></li>
-		<li class="float_left"><span><?php echo anchor("$controller_name/generate_barcodes",$this->lang->line("items_generate_barcodes"),array('id'=>'generate_barcodes', 'target' =>'_blank','title'=>$this->lang->line('items_generate_barcodes'))); ?></span></li>
+<div class="panel panel-default" id="table_action_header">
+	<tr>
+		<td><span><?php echo anchor("$controller_name/delete",$this->lang->line("common_delete"),array('id'=>'delete','class'=>'btn btn-sm btn-success')); ?></span></td>
+		<td><span><?php echo anchor("$controller_name/bulk_edit/width:$form_width",$this->lang->line("items_bulk_edit"),array('id'=>'bulk_edit','title'=>$this->lang->line('items_edit_multiple_items'),'class'=>'btn btn-sm btn-success')); ?></span></td>
+		<td><span><?php echo anchor("$controller_name/generate_barcodes",$this->lang->line("items_generate_barcodes"),array('id'=>'generate_barcodes', 'target' =>'_blank','title'=>$this->lang->line('items_generate_barcodes'),'class'=>'btn btn-sm btn-success')); ?></span></td></tr>
 		<li class="float_right">
 		<img src='<?php echo base_url()?>images/spinner_small.gif' alt='spinner' id='spinner' />
 		<?php echo form_open("$controller_name/search",array('id'=>'search_form')); ?>
 		<input type="text" name ='search' id='search'/>
 		</form>
 		</li>
-	</ul>
 </div>
 
 <div id="table_holder" style="font-size:14px">
